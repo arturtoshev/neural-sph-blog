@@ -1,6 +1,9 @@
 <!DOCTYPE html>
 <html>
 <head>
+
+  <script async src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML" type="text/javascript"></script>
+
   <meta charset="utf-8">
   <meta name="description"
         content="Neural SPH addresses fundamental problems in GNN-based fluid simulations with insights from traditional SPH solvers, resulting in significantly better physics modeling.">
@@ -50,7 +53,7 @@
           <div class="is-size-5 publication-authors">
             <span class="author-block"><sup>1</sup>TUM AER,</span>
             <span class="author-block"><sup>2</sup>TUM MEP,</span>
-            <span class="author-block"><sup>3</sup>JKU Linz</span>
+            <span class="author-block"><sup>3</sup>JKU Linz,</span>
             <span class="author-block"><sup>4</sup>NXAI</span>
           </div>
 
@@ -113,12 +116,53 @@
   </div>
 </section>
 
-<!-- Graphical Abstract - full dam break video -->
+<!-- Graphical Abstract-->
+<section class="hero teaser">
+  <div class="container is-max-desktop">
+    <div class="columns is-centered has-text-centered">
+      <!-- copy this part for inserting figure -->
+      <div class="content has-text-centered">
+        <img src="./static/figures/placeholder.jpg" height="780" width="820">
+        <p>
+          Add caption here.
+        </p>
+        <!-- adjust vertical space below figure with line breaks-->
+        <br><br>
+      </div>
+      <!---->
+    </div>
+  </div>
+</section>
+
+<!-- full dam break video -->
+<section class="hero is-light is-small">
+  <div class="hero-body">
+    <div class="container ">
+      <div class="columns is-centered has-text-centered">
+        <!-- copy this part from here ... -->
+        <div class="content has-text-centered">
+          <br><br>
+          <img src="./static/videos/placeholder.gif" height="780" width="820">
+          <!-- for .mp4 replace <img ... 820"> with the lines below
+          <video id="unique_id" autoplay controls muted loop playsinline width="100%">
+            <source src="./static/videos/placeholder.mp4" type="video/mp4">
+          </video>
+          -->
+          <p>
+            Add caption here.
+          </p>
+          <!-- adjust vertical space below gif/mp4 with line breaks-->
+          <br><br>
+        </div>
+        <!-- ... to here for inserting gif/mp4 -->
+      </div>
+    </div>
+  </div>
+</section>
 
 <!-- Abstract -->
 <section class="section">
   <div class="container is-max-desktop">
-    <!-- Abstract. -->
     <div class="columns is-centered has-text-centered">
       <div class="column is-four-fifths">
         <h2 class="title is-3">Abstract</h2>
@@ -137,14 +181,191 @@
         </div>
       </div>
     </div>
-    <!--/ Abstract. -->
+  </div>
+</section>
+
 <!-- How SPH works -->
+<section class="section">
+  <div class="container is-max-desktop">
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3">Smoothed Particle Hydrodynamics</h2>
+          <div class="content has-text-justified">
+
+            <p>
+              SPH is a Lagrangian, mesh-free method for numerically solving governing equations,
+              by discretizing these with a set of discrete particles. The properties
+              of the quantities can then calculated by kernel interpolation. Thus, 
+              a summation over every interaction between particle <i>i</i> and all particles
+              <i>j</i> inside a given domain is carried out. Each interaction is then
+              weighted using a kernel function <i>W</i>, as illustrated below.
+
+            </p>
+
+            <p><a href="https://commons.wikimedia.org/wiki/File:SPHInterpolationColorsVerbose.svg#/media/File:SPHInterpolationColorsVerbose.svg"><div class="has-text-centered"><img src="https://upload.wikimedia.org/wikipedia/commons/8/80/SPHInterpolationColorsVerbose.svg" alt="SPHInterpolationColorsVerbose.svg" height="273" width="287"></a><br>By <a href="//commons.wikimedia.org/w/index.php?title=User:Jlcercos&amp;action=edit&amp;redlink=1" class="new" title="User:Jlcercos (page does not exist)">Jlcercos</a> - <span class="int-own-work" lang="en">Own work</span>, <a href="https://creativecommons.org/licenses/by-sa/4.0" title="Creative Commons Attribution-Share Alike 4.0">CC BY-SA 4.0</a>, <a href="https://commons.wikimedia.org/w/index.php?curid=70225405">Link</div></a></p>
+
+            <p>
+              In Neural SPH, the approximated governing equations are the incompressible
+              Navier-Stokes equations (NSE) which are modeled by the so-called weakly
+              compressible NSE
+            </p>
+
+            \[
+              \begin{align}
+                \frac{d}{dt}(\rho) &= - \rho ~ (\nabla \cdot \mathbf{u}), \label{eq1}\tag{1}\\
+                \frac{d}{dt}(\mathbf{u}) &= - \frac{1}{\rho} \nabla p ~ + ~ \frac{\nu}{V_{ref}L_{ref}}
+                \nabla^2 \mathbf{u} ~ + ~ \mathbf{g}, \label{eq2}\tag{2}
+              \end{align}
+            \]
+
+            <p>
+              where <i>&rho;</i> is the fluid density, <i>u</i> its velocity, <i>p</i>
+              the pressure, <i>&nu;</i> the kinematic viscosity, <i>V<sub>ref</sub></i>
+              a reference volume, <i>L<sub>ref</sub></i> a reference length and <i>g</i>
+              an external force. The continuity equation \eqref{eq1} and the momentum
+              equation \eqref{eq2} are coupled via a equation of state of the form
+            </p>
+
+            \[p(\rho) = p_{ref} \left( \frac{\rho}{\rho_{ref}} - 1 \right). \label{eq3}\tag{3}\]
+
+          </div>
+      </div>
+    </div>
+  </div>
+</section>
 
 <!-- Limitations of existing approaches -->
+<section class="section">
+  <div class="container is-max-desktop">
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3">Limitations of existing approaches</h2>
+        <div class="content has-text-justified">
+          <p style="color:red">
+            Do you want to have this section now?
+          </p>
+
+          <p>
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
+            tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+            quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+            consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
+            cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat
+            non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
 
 <!-- Neural SPH: 1. External force treatment, 2. SPH Relaxation -->
+<section class="section">
+  <div class="container is-max-desktop">
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3">Neural SPH</h2>
+        <h3 class="title is-4">External Force Treatment</h3>
+        <div class="content has-text-justified">
+          <p>
+            The idea is to split the terms on the right-hand side of the momentum
+            equation \eqref{eq2} into [...] + <b>g</b> and add it back on top of the learned
+            solver. Therefore, the accumulated external force needs to be removed
+            from the target acceleration, leading to
+          </p>
+
+          \[a^{target} = GNN \left( X^{t_{k-H-1}:t_k}, \mathbf{g} \right) + \mathbf{g}^{FD}_M. \label{eq4}\tag{4}\]
+
+          <br>
+
+        </div>
+
+        <h3 class="title is-4">SPH Relaxation</h3>
+        <div class="content has-text-justified">
+          <p>
+            Besides the external force treatment, we propose to apply a SPH Relaxation
+            step after each learned solver step to improve the particle distribution.
+            This SPH relaxation has only access to the particle coordinates and no other physical
+            quantities such as density and velocity. For the viscous term in equation \eqref{eq2},
+            we use the effective velocity from the difference in coordinates. One update 
+            step of the relaxation corresponds to
+          </p>
+
+          \[
+            \begin{align}
+              \mathbf{a} &= \alpha \frac{-1}{\rho} \nabla p ~ + ~ \alpha \beta \nabla^2 \mathbf{u} , \label{eq5}\tag{5}\\
+              \mathbf{p} &= \mathbf{p} ~ + ~  \mathbf{a}, \label{eq6}\tag{6}
+            \end{align}
+          \]
+
+          <p>
+            where the time step and the pre-factors are hidden in the hyperparameters
+            <i>&alpha;</i> and <i>&beta;</i>. Furthermore, according to the weakly 
+            compressible assumption,
+            density fluctuations should not exceed ∼ 1%. Due to the use of density summation,
+            we set all <i>&rho;</i> < 0.98 <i>&rho;<sub>ref</sub></i> to 
+            <i>&rho;<sub>ref</sub></i> , and all <i>&rho;</i> > 1.02 <i>&rho;<sub>ref</sub></i>
+            to 1.02 <i>&rho;<sub>ref</sub></i>. Our relaxation implementation is based on the 
+            <a href="https://github.com/tumaer/jax-sph/tree/main">JAX-SPH</a> codebase.
+          </p>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
 
 <!-- Experiments: ... -->
+<section class="section">
+  <div class="container is-max-desktop">
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3">Experiments</h2>
+        <h3 class="title is-4">Dam Break</h3>
+        <div class="content has-text-justified">
+          <div class="content has-text-centered">
+            <br><br>
+            <video id="unique_id" autoplay controls muted loop playsinline width="100%">
+              <source src="./static/videos/placeholder.mp4" type="video/mp4">
+            </video>
+            <p>
+              Add caption here.
+            </p>
+            <br><br>
+          </div>
+        </div>
+
+        <h3 class="title is-4">Lid Driven Cavity</h3>
+        <div class="content has-text-justified">
+          <div class="content has-text-centered">
+            <br><br>
+            <video id="unique_id" autoplay controls muted loop playsinline width="100%">
+              <source src="./static/videos/placeholder.mp4" type="video/mp4">
+            </video>
+            <p>
+              Add caption here.
+            </p>
+            <br><br>
+          </div>
+        </div>
+
+        <h3 class="title is-4">Reverse Poiseuille Flow</h3>
+        <div class="content has-text-justified">
+          <div class="content has-text-centered">
+            <br><br>
+            <video id="unique_id" autoplay controls muted loop playsinline width="100%">
+              <source src="./static/videos/placeholder.mp4" type="video/mp4">
+            </video>
+            <p>
+              Add caption here.
+            </p>
+            <br><br>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
 
 
 <section class="section" id="BibTeX">

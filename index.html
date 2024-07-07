@@ -21,7 +21,7 @@
   <link rel="stylesheet"
         href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
   <link rel="stylesheet" href="./static/css/index.css">
-  <link rel="icon" href="./static/images/favicon.svg">
+  <link rel="icon" href="./static/images/ldc2d.png">
 
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   <script defer src="./static/js/fontawesome.all.min.js"></script>
@@ -79,7 +79,7 @@
                 </a>
               </span>
               <!-- Video Link. -->
-              <span class="link-block">
+              <!-- <span class="link-block">
                 <a href="https://www.youtube.com"
                    class="external-link button is-normal is-rounded is-dark" style="color: red;">
                   <span class="icon">
@@ -87,7 +87,7 @@
                   </span>
                   <span>Video</span>
                 </a>
-              </span>
+              </span> -->
               <!-- Code Link. -->
               <span class="link-block">
                 <a href="https://github.com/tumaer/neuralsph"
@@ -117,44 +117,26 @@
 </section>
 
 <!-- Graphical Abstract-->
-<section class="hero teaser">
-  <div class="container is-max-desktop">
-    <div class="columns is-centered has-text-centered">
-      <!-- copy this part for inserting figure -->
-      <div class="content has-text-centered">
-        <img src="./static/figures/placeholder.jpg" height="780" width="820">
-        <p>
-          Add caption here.
-        </p>
-        <!-- adjust vertical space below figure with line breaks-->
-        <br><br>
-      </div>
-      <!---->
-    </div>
-  </div>
-</section>
-
-<!-- full dam break video -->
 <section class="hero is-light is-small">
   <div class="hero-body">
-    <div class="container ">
+    <div class="container is-max-desktop">
       <div class="columns is-centered has-text-centered">
         <!-- copy this part from here ... -->
         <div class="content has-text-centered">
-          <br><br>
-          <img src="./static/videos/placeholder.gif" height="780" width="820">
-          <!-- for .mp4 replace <img ... 820"> with the lines below
-          <video id="unique_id" autoplay controls muted loop playsinline width="100%">
-            <source src="./static/videos/placeholder.mp4" type="video/mp4">
-          </video>
-          -->
+          <br>
+          <img src="./static/images/dam2d_85.png" height="812" width="600">
           <p>
-            Add caption here.
+            <strong>Neural SPH</strong> improves Lagrangian fluid dynamics, showcased by physics modeling
+            of the 2D dam break example after 80 rollout steps. Different models exhibit 
+            different physics behaviors. From top to bottom: <strong>GNS</strong> 
+            <a href="https://arxiv.org/abs/2002.09405">(Sanchez-Gonzalez et al., 2020)</a>, 
+            GNS with corrected force only (<strong>GNS\(_g\)</strong>), full Neural SPH-enhanced GNS (<strong>GNS\(_{g,p}\)</strong>), 
+            and the ground truth <strong>SPH</strong> simulation. The colors correspond to the density 
+            deviation from the reference density; the system is considered physical within 0.98-1.02.
           </p>
-          <!-- adjust vertical space below gif/mp4 with line breaks-->
-          <br><br>
         </div>
         <!-- ... to here for inserting gif/mp4 -->
+        <br>
       </div>
     </div>
   </div>
@@ -168,15 +150,22 @@
         <h2 class="title is-3">Abstract</h2>
         <div class="content has-text-justified">
           <p>
-            Smoothed particle hydrodynamics (SPH) is omnipresent in modern engineering and scientific
-            disciplines. SPH is a class of Lagrangian schemes that discretize fluid dynamics via finite material points that are tracked through the evolving velocity field. Due to the particle-like nature of the simulation, graph neural networks
-            (GNNs) have emerged as appealing and successful surrogates. However, the practical utility of
-            such GNN-based simulators relies on their ability to faithfully model physics, providing accurate and stable predictions over long time horizons – which is a notoriously hard problem. In
-            this work, we identify particle clustering originating from tensile instabilities as one of the
-            primary pitfalls. Based on these insights, we enhance both training and rollout inference of
-            state-of-the-art GNN-based simulators with varying components from standard SPH solvers, including pressure, viscous, and external force components. All neural SPH-enhanced simulators
-            achieve better performance, often by orders of magnitude, than the baseline GNNs, allowing
-            for significantly longer rollouts and significantly better physics modeling.
+            Smoothed particle hydrodynamics (SPH) is omnipresent in modern engineering 
+            and scientific disciplines. SPH is a class of Lagrangian schemes that 
+            discretize fluid dynamics via finite material points that are tracked 
+            through the evolving velocity field. Due to the particle-like nature of the 
+            simulation, graph neural networks (GNNs) have emerged as appealing and 
+            successful surrogates. However, the practical utility of such GNN-based 
+            simulators relies on their ability to faithfully model physics, providing 
+            accurate and stable predictions over long time horizons - which is a 
+            notoriously hard problem. In this work, we identify particle clustering 
+            originating from tensile instabilities as one of the primary pitfalls. Based
+            on these insights, we enhance both training and rollout inference of 
+            state-of-the-art GNN-based simulators with varying components from standard 
+            SPH solvers, including pressure, viscous, and external force components. All
+            Neural SPH-enhanced simulators achieve better performance than the baseline
+            GNNs, often by orders of magnitude in terms of rollout error, allowing for
+            significantly longer rollouts and significantly better physics modeling.
           </p>
         </div>
       </div>
@@ -193,21 +182,33 @@
           <div class="content has-text-justified">
 
             <p>
-              SPH is a Lagrangian, mesh-free method for numerically solving governing equations,
-              by discretizing these with a set of discrete particles. The properties
-              of the quantities can then calculated by kernel interpolation. Thus, 
-              a summation over every interaction between particle <i>i</i> and all particles
-              <i>j</i> inside a given domain is carried out. Each interaction is then
-              weighted using a kernel function <i>W</i>, as illustrated below.
-
+              Smoothed particle hydrodynamics (SPH) is a Lagrangian, mesh-free method 
+              for numerically solving differential equations, which is the prefered method
+              to simulate problems with (a) free surfaces, (b) complex boundaries, (c) 
+              multi-phase flows, and (d) fluid-structure interactions. The method works              
+              by discretizing the domain with a set of particles at whose locations the
+              physical quantities can then estimated by kernel interpolations. Thus, 
+              a summation over every interaction between particle \(i\) and all particles
+              \(j\) within a given cutoff radius is carried out. Each interaction is then
+              weighted using a radial kernel function \(W\), as illustrated below.
             </p>
 
-            <p><a href="https://commons.wikimedia.org/wiki/File:SPHInterpolationColorsVerbose.svg#/media/File:SPHInterpolationColorsVerbose.svg"><div class="has-text-centered"><img src="https://upload.wikimedia.org/wikipedia/commons/8/80/SPHInterpolationColorsVerbose.svg" alt="SPHInterpolationColorsVerbose.svg" height="273" width="287"></a><br>By <a href="//commons.wikimedia.org/w/index.php?title=User:Jlcercos&amp;action=edit&amp;redlink=1" class="new" title="User:Jlcercos (page does not exist)">Jlcercos</a> - <span class="int-own-work" lang="en">Own work</span>, <a href="https://creativecommons.org/licenses/by-sa/4.0" title="Creative Commons Attribution-Share Alike 4.0">CC BY-SA 4.0</a>, <a href="https://commons.wikimedia.org/w/index.php?curid=70225405">Link</div></a></p>
+            <p>
+              <a href="https://commons.wikimedia.org/wiki/File:SPHInterpolationColorsVerbose.svg#/media/File:SPHInterpolationColorsVerbose.svg">
+                <div class="has-text-centered">
+                  <img src="https://upload.wikimedia.org/wikipedia/commons/8/80/SPHInterpolationColorsVerbose.svg" alt="SPHInterpolationColorsVerbose.svg" height="273" width="287">
+                </div>
+              </a>
+              <br>
+              <div class="has-text-centered">
+                SPH kernel, source: <a href="https://commons.wikimedia.org/w/index.php?curid=70225405">Wikipedia</a>.
+              </div>
+            </p>
 
             <p>
               In Neural SPH, the approximated governing equations are the incompressible
               Navier-Stokes equations (NSE) which are modeled by the so-called weakly
-              compressible NSE
+              compressible NSE given below.
             </p>
 
             \[
@@ -219,15 +220,16 @@
             \]
 
             <p>
-              where <i>&rho;</i> is the fluid density, <i>u</i> its velocity, <i>p</i>
-              the pressure, <i>&nu;</i> the kinematic viscosity, <i>V<sub>ref</sub></i>
-              a reference volume, <i>L<sub>ref</sub></i> a reference length and <i>g</i>
-              an external force. The continuity equation \eqref{eq1} and the momentum
-              equation \eqref{eq2} are coupled via a equation of state of the form
+              where \(\rho\) is the fluid density, \( \mathbf{u}\) its velocity, \(p\)
+              the pressure, \(\nu\) the kinematic viscosity, \(V_{ref}\)
+              a reference volume, \(L_{ref}\) a reference length, and \(\mathbf{g}\)
+              the external force. The continuity equation Eq. \eqref{eq1} and the momentum
+              equation Eq. \eqref{eq2} are coupled via an equation of state of the form
             </p>
 
             \[p(\rho) = p_{ref} \left( \frac{\rho}{\rho_{ref}} - 1 \right). \label{eq3}\tag{3}\]
 
+            For a more visual introduction to SPH, see Matthias Teschner's <a href="https://cg.informatik.uni-freiburg.de/course_notes/sim_10_sph.pdf">slides</a>. 
           </div>
       </div>
     </div>
@@ -239,19 +241,30 @@
   <div class="container is-max-desktop">
     <div class="columns is-centered has-text-centered">
       <div class="column is-four-fifths">
-        <h2 class="title is-3">Limitations of existing approaches</h2>
+        <h2 class="title is-3">The problem of long rollouts</h2>
         <div class="content has-text-justified">
-          <p style="color:red">
-            Do you want to have this section now?
-          </p>
-
           <p>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-            tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-            quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-            consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
-            cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat
-            non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+            Both classical numerics and learned approaches to Lagrangian fluid simulations
+            face difficulties when evolving a systems over hundreds or thousands of steps.
+            Some of the challenges for the classical methods are the evolution of particles
+            at free surfaces / interfaces / boundaries, as well as particle clumping. After extensively 
+            analysing the failure modes of GNN-based Lagrangian CFD surrogates, we conclude 
+            that these same challenges are present in learned models and are the primary
+            cause of frequently observed catastrophic failures. 
+          </p>
+          <p>
+            To qualitatively understand clumping, in the figure below we plot the histogram 
+            of the per-particle number of neighbors after 400 steps of a 2D lid-driven cavity
+            simulation, which  has regions with high particle density. We see a pronounced 
+            increase in the number of particles with 8-10 neighbors, indicating clustering artifacts.
+          </p>
+        </div>
+        <div class="content has-text-centered">
+          <img src="./static/images/ldc2d_hist_nbrs_paper-1.png" height="812" width="600">
+          <p>
+            <strong>Number of neighbors mismatch</strong> due to particle clustering. Histogram of the 
+            number of neighbors of the 2D lid-driven cavity experiment after 400 rollout 
+            steps (average over all test rollouts).
           </p>
         </div>
       </div>
@@ -265,30 +278,71 @@
     <div class="columns is-centered has-text-centered">
       <div class="column is-four-fifths">
         <h2 class="title is-3">Neural SPH</h2>
-        <h3 class="title is-4">External Force Treatment</h3>
         <div class="content has-text-justified">
           <p>
-            The idea is to split the terms on the right-hand side of the momentum
-            equation \eqref{eq2} into [...] + <b>g</b> and add it back on top of the learned
-            solver. Therefore, the accumulated external force needs to be removed
-            from the target acceleration, leading to
+            To address the challenges of long rollouts, we propose two key components
+            to enhance the performance of GNN-based Lagrangian fluid simulations: 
+            <ol>
+              <li><strong>External Force Treatment</strong></li>
+              <li><strong>SPH Relaxation</strong></li>
+            </ol>
+            </ol>
+            inspired by traditional SPH solvers and aim to improve the physics modeling
+            of the learned simulators.
           </p>
-
-          \[a^{target} = GNN \left( X^{t_{k-H-1}:t_k}, \mathbf{g} \right) + \mathbf{g}^{FD}_M. \label{eq4}\tag{4}\]
-
-          <br>
-
         </div>
 
-        <h3 class="title is-4">SPH Relaxation</h3>
+        <h3 class="title is-4" style="text-align: left;">1. External Force Treatment</h3>
         <div class="content has-text-justified">
           <p>
-            Besides the external force treatment, we propose to apply a SPH Relaxation
-            step after each learned solver step to improve the particle distribution.
-            This SPH relaxation has only access to the particle coordinates and no other physical
-            quantities such as density and velocity. For the viscous term in equation \eqref{eq2},
-            we use the effective velocity from the difference in coordinates. One update 
-            step of the relaxation corresponds to
+            The learning problem formulation by 
+            <a href="https://arxiv.org/abs/2002.09405">Sanchez-Gonzalez et al., 2020</a>, 
+            strives for simplicity by asking the GNN to implicitly predict the effect of 
+            both inter-particle forces and external forces. On the example of the dam break
+            experiment, we stress that if the model learned Physics correctly, then the
+            bias term of the last decode layer should correspond to the gravitational force.
+            However, on a pretrained checkpoint, we observed a bias term of more than 10x smaller
+            than the respective gravitational acceleration!
+          </p>
+          <p>
+            Our idea is to split the terms on the right-hand side of the momentum equation 
+            Eq. \eqref{eq2} into \([...] + \mathbf{g}\) and add the external forces back to the learned
+            acceleration in the integrator, essentially forcing the model to 
+            <strong>learn only inter-particle forces</strong>. Implementing this idea
+            requires special attention because we train on 100-times larger time steps than
+            the reference SPH solver, while we only have access to instantaneous external forces.
+            Thus, the accumulated external force over \(M=100\) SPH steps needs to be 
+            removed from the full acceleration \(\mathbf{a}\), leading to
+          </p>
+
+          \[\mathbf{a} = \texttt{GNN}(\textbf{X}^{t_{k-H-1}:t_k}, \mathbf{g}) + \mathbf{g}_{M}^{FD}. \label{eq4}\tag{4}\]
+        
+        </div>
+        <div class="content has-text-centered">
+          <br>
+          <img src="./static/images/force_treatment.png" height="800" width="800">
+            <p>
+            <strong>External Force Treatment</strong>: our extension to the original GNS
+            training procedure is <span style="color: green;">colored in green</span>.
+            We denote the model trained with our extension as GNN\(_g\), opposed to GNN.
+            Note: the frames above correspond to steps [0, 20, 40, 60], rather 
+            than [0, 1, 2, 3], to better visualize the differences.
+            </p>
+          </p>
+        </div>
+
+        <br>
+        <h3 class="title is-4" style="text-align: left;">2. SPH Relaxation</h3>
+        <div class="content has-text-justified">
+          <p>
+            In addition to the external force treatment, we propose to apply an SPH relaxation
+            after each learned solver step to improve the poor particle distribution observed 
+            in the number on neighbors figure above. Notably, our relaxation is a applied
+            <strong>only during inference and does not require retraining the model</strong>.
+            We propose an SPH relaxation procedure which (a) uses only the particle coordinates, 
+            i.e. no other physical quantities such as density and velocity, and (b) can 
+            handle free surfaces as well as walls discretized with one dummy particle layer. 
+            Ultimately, the relaxation consists of the \(l\) loops of the following two steps:
           </p>
 
           \[
@@ -300,15 +354,30 @@
 
           <p>
             where the time step and the pre-factors are hidden in the hyperparameters
-            <i>&alpha;</i> and <i>&beta;</i>. Furthermore, according to the weakly 
+            \(\alpha\) and \(\beta\). Furthermore, according to the weakly 
             compressible assumption,
-            density fluctuations should not exceed ∼ 1%. Due to the use of density summation,
-            we set all <i>&rho;</i> < 0.98 <i>&rho;<sub>ref</sub></i> to 
-            <i>&rho;<sub>ref</sub></i> , and all <i>&rho;</i> > 1.02 <i>&rho;<sub>ref</sub></i>
-            to 1.02 <i>&rho;<sub>ref</sub></i>. Our relaxation implementation is based on the 
-            <a href="https://github.com/tumaer/jax-sph/tree/main">JAX-SPH</a> codebase.
+            density fluctuations should not exceed \(\sim1\%\). Due to the use of density summation,
+            we set all \(\rho < 0.98\rho_{ref}\) to 
+            \(\rho_{ref}\) , and all \(\rho > 1.02 \rho_{ref}\)
+            to \(1.02\rho_{ref}\). Our relaxation implementation is based on the 
+            <a href="https://github.com/tumaer/jax-sph">JAX-SPH</a> codebase, but we stress
+            that our approach <strong>does not require a differentiably solver</strong>, as the relaxation 
+            solely operates on the particle coordinates. <br>
+            Consult our <a href="https://arxiv.org/abs/2402.06275">full paper</a> for 
+            various further implementation details.
           </p>
 
+        </div>
+        <div class="content has-text-centered">
+          <br>
+          <img src="./static/images/sph_relaxation.png" height="800" width="800">
+            <p>
+            <strong>SPH Relaxation</strong>: our particle relaxation procedure applied
+            after each learned solver step. The relaxation is applied only during inference.
+            Note: the frames above correspond to steps [0, 20, 40, 60], rather  
+            than [0, 1, 2, 3], to better visualize the differences.
+            </p>
+          </p>
         </div>
       </div>
     </div>
@@ -321,52 +390,93 @@
     <div class="columns is-centered has-text-centered">
       <div class="column is-four-fifths">
         <h2 class="title is-3">Experiments</h2>
-        <h3 class="title is-4">Dam Break</h3>
         <div class="content has-text-justified">
-          <div class="content has-text-centered">
-            <br><br>
-            <video id="unique_id" autoplay controls muted loop playsinline width="100%">
-              <source src="./static/videos/placeholder.mp4" type="video/mp4">
-            </video>
-            <p>
-              Add caption here.
-            </p>
-            <br><br>
-          </div>
+          <p>
+            We evaluate the performance of Neural SPH on all 7
+            <a href="https://github.com/tumaer/lagrangebench">LagrangeBench</a> datasets,
+            and both the <a href="https://arxiv.org/abs/2002.09405">GNS</a> and 
+            <a href="https://arxiv.org/abs/2110.02905">SEGNN</a> models. Our results are
+            summarized in the table below, but the appendix of the paper includes 
+            various further results including: rollout visualizations, velocity and acceleration histograms, and 
+            extensive hyperparameter studies. Overall, we find that Neural SPH significantly
+            improves the physics modeling of GNN-based Lagrangian fluid simulations, at
+            the cost of a slightly increased computational overhead, while the Neural SPH
+            hyperparameters are robust and easy to tune.
+          </p>
+
+        <h3 class="title is-4">Dam Break</h3>
+        <p>
+          The dam break experiment is a challenging test case for fluid simulations 
+          due to the free-surface dynamics and wall interactions. 
+        </p>
+        <div class="content has-text-centered">
+          <br><br>
+          <video id="unique_id" autoplay controls muted loop playsinline width="100%">
+            <source src="./static/videos/dam2d_10k_hoch.mp4" type="video/mp4">
+          </video>
+          <p>
+            <strong>2D dam break</strong> rollout of test trajectory 0. Same as the figure at the top, but 
+            the full trajectory.
+          </p>
+          <br>
         </div>
 
         <h3 class="title is-4">Lid Driven Cavity</h3>
-        <div class="content has-text-justified">
-          <div class="content has-text-centered">
-            <br><br>
-            <video id="unique_id" autoplay controls muted loop playsinline width="100%">
-              <source src="./static/videos/placeholder.mp4" type="video/mp4">
-            </video>
-            <p>
-              Add caption here.
-            </p>
-            <br><br>
-          </div>
+        <p>
+          The lid-driven cavity experiment is a standard benchmark for incompressible fluid 
+          simulations and is used to test the ability of the model to handle fixed and
+          moving no-slip walls.
+        </p>
+        <div class="content has-text-centered">
+          <br><br>
+          <video id="unique_id" autoplay controls muted loop playsinline width="100%">
+            <source src="./static/videos/ldc2d_10k.mp4" type="video/mp4">
+          </video>
+          <p>
+            Density and velocity magnitude of <strong>2D lid-driven cavity</strong> over 400 rollout 
+            steps (left to right): GNS, GNS\(_p\), SPH. The colors in the first row 
+            correspond to the density deviation from the reference density; the system 
+            is considered physical within 0.98-1.02.
+          </p>
+          <br>
         </div>
 
         <h3 class="title is-4">Reverse Poiseuille Flow</h3>
-        <div class="content has-text-justified">
-          <div class="content has-text-centered">
-            <br><br>
-            <video id="unique_id" autoplay controls muted loop playsinline width="100%">
-              <source src="./static/videos/placeholder.mp4" type="video/mp4">
-            </video>
-            <p>
-              Add caption here.
-            </p>
-            <br><br>
-          </div>
+        <p>
+          The reverse Poiseuille flow case consists of two opposed channel flows (without walls)
+          with the lower half of the domain being forced left and the upper half being forced right. 
+          This experiment tests the ability of the model to handle spatially varying external forces.
+        </p>
+        <div class="content has-text-centered">
+          <br><br>
+          <img src="./static/images/rpf2d_hist_min_paper-1.png" height="800" width="500">
+          <p>
+            Velocity magnitudes histogram of 2D reverse Poiseuille flow after 400 rollout 
+            steps (averaged over all rollouts). Our GNS\(_{g,p,\nu}\) matches the ground 
+            truth distribution of SPH.
+          </p>
+          <br><br>
+          <img src="./static/images/rpf2d_gns_ext-1.png", height="800" width="700">
+          <p>
+            Ablations on RPF 2D with GNS-10-128 over the simulation length. Each plot
+            corresponds to a different performance measure, namely (1) position MSE,
+            (2) kinetic energy MSE, (3) Sinkhorn MSE, (4) density deviation from reference,
+            (5) Dirichlet energy, (6) Chamfer distance.
+            Solid line indicated the mean, and the intervals indicate the 0.25 and 0.75 
+            quantiles over the test trajectories.
+          </p>
         </div>
       </div>
     </div>
   </div>
 </section>
 
+<section class="section">
+  <div class="container is-max-desktop content">
+    <h2 class="title">Correspondence</h2>
+    In case of any questions, please reach out to artur.toshev[at]tum.de
+  </div>
+</section>
 
 <section class="section" id="BibTeX">
   <div class="container is-max-desktop content">

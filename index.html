@@ -403,6 +403,21 @@
             the cost of a slightly increased computational overhead, while the Neural SPH
             hyperparameters are robust and easy to tune.
           </p>
+          <div class="content has-text-centered">
+            <br>
+            <img src="./static/images/table.png" height="800" width="800">
+            <p>
+              Performance measures averaged over a rollout of 400 steps. An additional 
+              subscript \(_g\) indicates that external forces are removed from the model
+              outputs, subscript \(p\) indicates that the SPH relaxation has a pressure
+              term, and subscript \(\nu\) that the viscosity term is added to the SPH
+              relaxation. The numbers in the table are averaged over all test trajectories.
+              MSE\(_{400}\) corresponds to: MSE\(_{120}\) for 2D TGV, MSE\(_{55}\) for 3D TGV, and MSE\(_{395}\) for
+              2D DAM, as these are the full trajectory lengths excluding initial
+              history size H = 5.            
+            </p>
+            <br>
+          </div>
 
         <h3 class="title is-4">Dam Break</h3>
         <p>
